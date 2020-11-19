@@ -1,0 +1,175 @@
+#include"class_lib.h"
+
+class data{
+
+
+};
+
+class lote{
+    private:
+    int qnt;
+    float preco_unidade;
+    bool consiguinado;
+    // data vencimento;
+    // data data_retirada;
+    // data data_pagamento;
+
+    //--------------navega pela lista de lotes
+    // lote *prox;
+    // lote *ant;
+    public:
+    lote(){}
+
+    lote(int a){
+        this->set_qnt(a);
+    }
+
+    void set_qnt(int a){
+        if (a>=0)
+            qnt=a;
+    }
+
+    int get_qnt(void){
+        return qnt;
+    }
+
+    protected:
+};
+
+class produtos{
+    public:
+        std::string nome_do_produto;
+
+        //-------------lista de lotes;
+        //lote lote_list_inicio;
+        
+
+        //------------- opera proximo da lista e anterior
+        produtos *prox;
+        produtos *ant;
+    private:
+    protected:
+};
+
+
+class parque{
+    public:
+        std::string nome;
+        produtos l_produtos_inicio;      
+
+        //----------------navega pela lista de parques
+        parque *prox;
+        parque *ant;  
+    private:
+    protected:
+};
+
+class lista_parques{
+    parque *inicio;
+};
+
+class bandeira{
+    public:
+    std::string nome_bandeira;
+    float taxa[12];
+
+    bandeira *prox;
+    bandeira *ant;
+    
+    private:
+    protected:
+};
+
+
+class maquina_de_cartao{
+    public:
+    std:: string nome_maquina;
+    bool recebe_a_vista;
+    data data_cadastro;
+    bool esta_ativo;
+
+    //------------- inicia lista de bandeira
+    bandeira *bandeira_inicio;
+
+    //------------- opera lista de maquina de cartao
+    
+    maquina_de_cartao *prox;
+    maquina_de_cartao *ant;
+
+    private:
+    protected:
+};
+
+class lista_maquina_de_cartao{
+    maquina_de_cartao *inicio;
+
+    //--------------------------------
+};
+
+class forma_pagamento{
+    public:
+    std::string nome_forma_de_pag;
+    int n_de_parcelas[12];
+    std::string bandeira;
+    maquina_de_cartao *maquina_inicio;
+    
+    private:
+    protected:
+};
+
+
+class cliente{
+    public:
+        std::string nome_cliente;
+        data data_cadastro;
+        std::string regiao;
+        std::string categoria;
+        
+    
+    private:
+    protected:
+};
+
+class lista_cliente{
+    cliente *inicio;
+};
+
+class consiguinado{
+    public:
+        data data_entrega;
+        int qnt_deixado;
+        int qnt_vendida;
+    private:
+    protected:
+};
+
+
+class vendas{
+    public:
+        cliente *cel_cliente;
+        //lote *cel_lote;
+        forma_pagamento pag;
+        int  qnt;
+        int  bonificacao;
+        bool eh_consiguinado;
+        float valor_total;
+        data data_venda;
+
+        bool finalizado;
+         
+    private:
+    protected:
+};
+
+
+using namespace std;
+int main(){
+    std:: cout << "eae parceiro";
+    lote meu_lote(7);
+
+    cout<<endl;
+    cout<< (meu_lote.get_qnt())<< endl;
+
+    
+    return 0;
+}
