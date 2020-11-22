@@ -1,85 +1,50 @@
 #include"class_lib.h"
+#include<list>
+//consulta funcoes de lista 
 
+//it=minha_lista.beguin()
+//advance(it,5); //avanca 5
 class data{
 
 
 };
 
-class lote{
-    private:
-    int qnt;
-    float preco_unidade;
-    bool consiguinado;
-    // data vencimento;
-    // data data_retirada;
-    // data data_pagamento;
-
-    //--------------navega pela lista de lotes
-    // lote *prox;
-    // lote *ant;
+class cliente{
     public:
-    lote(){}
-
-    lote(int a){
-        this->set_qnt(a);
-    }
-
-    void set_qnt(int a){
-        if (a>=0)
-            qnt=a;
-    }
-
-    int get_qnt(void){
-        return qnt;
-    }
-
-    protected:
-};
-
-class produtos{
-    public:
-        std::string nome_do_produto;
-
-        //-------------lista de lotes;
-        //lote lote_list_inicio;
+        std::string nome_cliente;
+        //data data_cadastro;
+        std::string regiao;
+        std::string categoria;
         
-
-        //------------- opera proximo da lista e anterior
-        produtos *prox;
-        produtos *ant;
-    private:
-    protected:
-};
-
-
-class parque{
-    public:
-        std::string nome;
-        produtos l_produtos_inicio;      
-
-        //----------------navega pela lista de parques
-        parque *prox;
-        parque *ant;  
-    private:
-    protected:
-};
-
-class lista_parques{
-    parque *inicio;
-};
-
-class bandeira{
-    public:
-    std::string nome_bandeira;
-    float taxa[12];
-
-    bandeira *prox;
-    bandeira *ant;
+        void print_cliente(){
+            std::cout<<nome_cliente<<std::endl;
+            std::cout<<regiao<<std::endl;
+            std::cout<<categoria<<std::endl;
+        }
     
     private:
     protected:
 };
 
+class lista_cliente{
+        std::list<cliente> m_lista_cliente;
+        std::list<cliente>::iterator it;
+
+        void novo_cliente(){
+            cliente a;
+            m_lista_cliente.push_front(a); //adc novo lote no inicio
+        }
+};
+
+
+class bandeira{
+    public:
+    std::string nome_bandeira;
+    float taxa[12];
+    
+    private:
+    protected:
+};
 
 class maquina_de_cartao{
     public:
@@ -89,21 +54,31 @@ class maquina_de_cartao{
     bool esta_ativo;
 
     //------------- inicia lista de bandeira
-    bandeira *bandeira_inicio;
+
+        std::list<bandeira> lista_bandeira;
+        std::list<bandeira>::iterator it;
 
     //------------- opera lista de maquina de cartao
     
-    maquina_de_cartao *prox;
-    maquina_de_cartao *ant;
+        void nova_bandeira(){
+        bandeira a;
+        lista_bandeira.push_front(a); //adc novo lote no inicio
+
+    }
+
 
     private:
     protected:
 };
 
 class lista_maquina_de_cartao{
-    maquina_de_cartao *inicio;
+        std::list<maquina_de_cartao> m_lista_maquina_de_cartao;
+        std::list<maquina_de_cartao>::iterator it;
 
-    //--------------------------------
+        void nova_maquina_de_cartao(){
+            maquina_de_cartao a;
+            m_lista_maquina_de_cartao.push_front(a); //adc novo lote no inicio
+        }
 };
 
 class forma_pagamento{
@@ -117,23 +92,6 @@ class forma_pagamento{
     protected:
 };
 
-
-class cliente{
-    public:
-        std::string nome_cliente;
-        data data_cadastro;
-        std::string regiao;
-        std::string categoria;
-        
-    
-    private:
-    protected:
-};
-
-class lista_cliente{
-    cliente *inicio;
-};
-
 class consiguinado{
     public:
         data data_entrega;
@@ -143,7 +101,6 @@ class consiguinado{
     protected:
 };
 
-
 class vendas{
     public:
         cliente *cel_cliente;
@@ -151,24 +108,206 @@ class vendas{
         forma_pagamento pag;
         int  qnt;
         int  bonificacao;
-        bool eh_consiguinado;
+        bool eh_consignado;
         float valor_total;
-        data data_venda;
+        //data data_venda;
 
         bool finalizado;
-         
+
+
+
+        //---------------------funcoes
+        void print_vendas(){
+            cel_cliente->print_cliente();
+            std::cout<<qnt<<std::endl;
+            std::cout<<bonificacao<<std::endl;
+            std::cout<<eh_consignado<<std::endl;
+            std::cout<<valor_total<<std::endl;
+        }
+
+
+
+        //----------------------construtores
+        vendas(){}
+        vendas(cliente *m_cliente, int m_qnt,int m_bonificacao,float m_valor_total)
+        : cel_cliente(m_cliente) , qnt(m_qnt),bonificacao(m_bonificacao),eh_consignado(false), valor_total(m_valor_total){}
+
+
     private:
     protected:
 };
 
+class lote{
+
+    private:
+    friend class produto;
+
+    //-----------------------//
+    int qnt;                 //
+    float preco_unidade;     //
+    bool consignado;         //
+    // data vencimento;      //
+    // data data_retirada;   //
+    // data data_pagamento;  //
+    //---------------------- //
+
+    public:
+    lote(){}
+
+    lote(int a){
+        this->set_qnt(a);
+    }
+
+    void set_qnt(int a){
+        if (a>=0)
+            qnt=a;
+    }
+
+    void set_preco_unidade(float b){
+            preco_unidade=b;
+    }
+
+    void set_consignado(bool a){
+            consignado=a;
+    }
+
+    int get_qnt(void){
+        return qnt;
+    }
+
+    float get_preco_unidade(void){
+        return preco_unidade;
+    }
+
+    bool get_consignado(void){
+        return consignado;
+    }
+
+
+    void print_lote(){
+          std::cout << std::endl;
+          std::cout << qnt << std::endl;
+          std::cout << preco_unidade << std:: endl;
+          std::cout << consignado << std:: endl;
+    }
+
+    //--------------------------------lista vendas
+
+    std::list<vendas> lista_vendas;
+    std::list<vendas>::iterator it;
+
+    void nova_venda(){
+        vendas a;
+        lista_vendas.push_front(a); //adc novo lote no inicio
+    }
+         
+
+
+    protected:
+};
+
+class produto{
+    public:
+        //-------------lista de lotes;
+        std::list<lote> lista_lote;
+        std::list<lote>::iterator it;
+
+        void novo_lote(){
+            lote a;
+            lista_lote.push_front(a); //adc novo lote no inicio
+        }
+
+
+
+        private:
+        friend class lote;
+        std::string nome_do_produto; 
+    protected:
+
+};
+
+class parque{
+    public:
+        std::string nome;
+        produto l_produtos_inicio;      
+
+        //-------------criando lista de produtos-----------
+        std::list<lote> lista_lote;
+        std::list<lote>::iterator it;
+
+        void novo_produto(){
+            lote a;
+            lista_lote.push_front(a); //adc novo lote no inicio
+        }
+
+
+    private:
+    protected:
+};
+
+class lista_parques{
+
+        std::list<parque> mlista_parques;
+        std::list<parque>::iterator it;
+
+        void novo_parque(){
+            parque a;
+            mlista_parques.push_front(a); //adc novo lote no inicio
+        }
+};
+
+// class consiguinado{
+//     public:
+//         data data_entrega;
+//         int qnt_deixado;
+//         int qnt_vendida;
+//     private:
+//     protected:
+// };
+
+// class vendas{
+//     public:
+//         cliente *cel_cliente;
+//         //lote *cel_lote;
+//         forma_pagamento pag;
+//         int  qnt;
+//         int  bonificacao;
+//         bool eh_consiguinado;
+//         float valor_total;
+//         data data_venda;
+
+//         bool finalizado;
+         
+//     private:
+//     protected:
+// };
+
 
 using namespace std;
 int main(){
-    std:: cout << "eae parceiro";
-    lote meu_lote(7);
+    std:: cout << "eae parceiro"<<std::endl;
 
-    cout<<endl;
-    cout<< (meu_lote.get_qnt())<< endl;
+    produto prod;
+
+    cliente cliente_teste;
+
+    cliente_teste.nome_cliente= "porto seguro";
+    cliente_teste.regiao="norte";
+    cliente_teste.categoria="empresa";
+
+    cliente_teste.print_cliente();
+
+    vendas vendas_teste(&cliente_teste,10,0,1000.0);
+
+    vendas_teste.print_vendas();
+
+
+
+    // cout<< prod.lote_list_inicio->get_qnt() << endl;
+    // cout<< prod.lote_list_inicio->get_consignado() << endl;
+    // cout<< prod.lote_list_inicio->get_preco_unidade() << endl;
+
+
 
     
     return 0;
