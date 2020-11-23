@@ -84,9 +84,9 @@ class lista_maquina_de_cartao{
 class forma_pagamento{
     public:
     std::string nome_forma_de_pag;
-    int n_de_parcelas[12];
-    std::string bandeira;
-    maquina_de_cartao *maquina_inicio;
+    int n_de_parcelas;
+    bandeira m_bandeira;
+    maquina_de_cartao m_maquina;
     
     private:
     protected:
