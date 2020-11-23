@@ -4,7 +4,28 @@
 #include <iostream>
 #include <string.h>
 
-class data;
+class data{
+public:
+    data (unsigned int dia, unsigned int mes, unsigned int ano); 
+
+    void set_dia(unsigned int dia);
+    void set_mes(unsigned int mes);
+    void set_ano(unsigned int ano);
+
+    unsigned int get_dia() const;
+    unsigned int get_mes() const;
+    unsigned int get_ano() const;
+
+    void print() const;
+
+private:
+    unsigned int dia = 0;
+    unsigned int mes = 0;
+    unsigned int ano = 0;
+
+    void data_invalida();
+    bool bissexto();
+};
 
 class lote;
 class produtos;
