@@ -1,12 +1,23 @@
-#include "class_lib.hpp"
+#include "data.h"
+#include <iostream>
+#include <iomanip>
 
-data::data (unsigned int dia, unsigned int mes, unsigned int ano = 2020){
+std::ostream &operator<<( std::ostream &output, const Data &date ){
+    output << std::setw(2) << std::setfill('0') << date.get_dia() << "/" 
+        << std::setw(2) << std::setfill('0') << date.get_mes() << "/"
+        << date.get_ano() << std:: endl;
+    return output;
+}
+
+Data::Data (unsigned int dia, unsigned int mes, unsigned int ano){
     set_ano(ano);
     set_mes(mes);
     set_dia(dia);
 }
 
-void data::set_dia(unsigned int dia){
+Data::Data (){}
+
+void Data::set_dia(unsigned int dia){
     if ( mes==1 || mes==3 || mes==5 || mes==7 || mes==8 || mes==10 || mes==12){
         if(dia<=31){
             this->dia = dia;
@@ -30,33 +41,33 @@ void data::set_dia(unsigned int dia){
     }
 }
 
-void data::set_mes(unsigned int mes){
+void Data::set_mes(unsigned int mes){
     if (mes<=12){
         this->mes = mes; 
     }else { data_invalida(); }
 }
 
-void data::set_ano(unsigned int ano){
+void Data::set_ano(unsigned int ano){
     this->ano = ano;
 }
 
-unsigned int data::get_dia() const{
+unsigned int Data::get_dia() const{
     return this->dia;
 }
 
-unsigned int data::get_mes() const{
+unsigned int Data::get_mes() const{
     return this->mes;
 }
 
-unsigned int data::get_ano() const{
+unsigned int Data::get_ano() const{
     return this->ano;
 }
 
-void data::data_invalida() {
+void Data::data_invalida() {
     printf("Data Inválida\n");
 }
 
-bool data::bissexto(){
+bool Data::bissexto(){
     if (ano%4==0 && ano%100!=0)
         return true;
     if (ano%400==0)
@@ -64,8 +75,7 @@ bool data::bissexto(){
     return false;
 }
 
-void data::print() const{
-    std::cout << get_dia() << "/"
-        << get_mes() << "/"
-        << get_ano() << std::endl;
-}
+
+
+
+
