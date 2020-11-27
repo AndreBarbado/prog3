@@ -62,16 +62,18 @@ public:
 
 
 
-enum class Cartao {VISAMASTER, ELO, HIPERCARD};
+enum class Cartao {VISA, MASTER, ELO, HIPERCARD};
 
 
 
 class Taxas_bandeiras{
 protected:
-    std::array<float,12> c_visaemaster;
+    std::array<float,12> c_visa;
+    std::array<float,12> c_master;
     std::array<float,12> c_elo;
     std::array<float,12> c_hiper;
-    float d_visaemaster;
+    float d_visa;
+    float d_master;
     float d_elo;
     float d_hiper;
 
