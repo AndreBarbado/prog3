@@ -1,10 +1,34 @@
 #include "vendas.h"
 
 #include <iostream>
+#include <iomanip>
+
+
+
+std::ostream &operator<< (std::ostream &output, const Empresa &company ){
+    output << "Receita anual " << company.nome << ":" << std::endl;
+    for (const auto& it : company.receita_mensal){
+            output << it << " ";
+    }
+    output << std::endl;
+
+    return output;
+}
+
+
 
 Empresa::Empresa(){
     receita_mensal = {0,0,0,0,0,0,0,0,0,0,0,0};
+    nome = " ";
 }
+
+
+Empresa::Empresa(std::string nome){
+    receita_mensal = {0,0,0,0,0,0,0,0,0,0,0,0};
+    this->nome = nome;
+}
+
+
 
 std::ostream &operator<< (std::ostream &output , const Venda &sell ){
     if (sell.formapagamento == Forma_de_Pagamento::DINHEIRO)
@@ -24,7 +48,7 @@ std::ostream &operator<< (std::ostream &output , const Venda &sell ){
 
 
 
-Venda::Venda (Empresa empresa_creditada, Forma_de_Pagamento formapagamento, Data data_de_venda, float valor, unsigned int parcelas){
+Venda::Venda (Empresa* empresa_creditada, Forma_de_Pagamento formapagamento, Data data_de_venda, float valor, unsigned int parcelas){
     this->empresa_creditada = empresa_creditada;
     this->formapagamento = formapagamento;
     this->data_de_venda = data_de_venda;
@@ -51,9 +75,8 @@ void Venda::pagar(){
 
 
 
-void Dinheiro::pagar(Empresa& empresa_creditada, Data data_de_pfmt, float valor){
-    empresa_creditada.receita_mensal[data_de_pfmt.get_mes()-1] += valor;
-    empresa_creditada.print();
+void Dinheiro::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float valor){
+    empresa_creditada->receita_mensal[data_de_pfmt.get_mes()-1] += valor;
 }
 
 
@@ -100,7 +123,7 @@ Cartao_Debito::Cartao_Debito(){
 
 
  
-void Cartao_Debito::pagar(Empresa empresa_creditada, Data data_de_pfmt, float valor){
+void Cartao_Debito::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float valor){
     float taxabandeira{};
 
     switch (bandeira_do_cartao)
@@ -122,8 +145,7 @@ void Cartao_Debito::pagar(Empresa empresa_creditada, Data data_de_pfmt, float va
 
     valor -= (valor*(taxabandeira/100));
 
-    empresa_creditada.receita_mensal[data_de_pfmt.get_mes()-1] += valor;
-    empresa_creditada.print();
+    empresa_creditada->receita_mensal[data_de_pfmt.get_mes()-1] += valor;
 }
 
 
@@ -152,7 +174,7 @@ Cartao_Credito::Cartao_Credito(){
 
 
 
-void Cartao_Credito::pagar(Empresa empresa_creditada, Data data_de_pfmt, float valor, unsigned int parcelas){
+void Cartao_Credito::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float valor, unsigned int parcelas){
     float taxabandeira{};
 
     switch (bandeira_do_cartao)
@@ -175,7 +197,6 @@ void Cartao_Credito::pagar(Empresa empresa_creditada, Data data_de_pfmt, float v
     valor -= (valor*(taxabandeira/100));
 
     for (unsigned int i = 0; i< parcelas; i++){
-        empresa_creditada.receita_mensal[data_de_pfmt.get_mes()-1 +i] += (valor/5);
+        empresa_creditada->receita_mensal[data_de_pfmt.get_mes()-1 +i] += (valor/parcelas);
     }
-    empresa_creditada.print();
 }
