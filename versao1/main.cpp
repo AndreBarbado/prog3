@@ -1,18 +1,21 @@
 #include "data.h"
 #include "vendas.h"
 
+#include <iostream>
+
 int main(){
 
     Data data_teste{15,8};
 
-    Venda teste{Forma_de_Pagamento::Dinheiro, data_teste , 771.99};
+    Empresa emp_teste;
+
+    Venda teste{&emp_teste, Forma_de_Pagamento::CARTAO_CREDITO , data_teste , 150, 3};
 
     std::cout << teste;
 
-    Pagamento testanto{teste};
+    teste.pagar();
 
-
-    testanto.pagar();
+    std::cout << emp_teste;
    
     return 0;
 }
