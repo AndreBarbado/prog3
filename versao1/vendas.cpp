@@ -88,11 +88,13 @@ Taxas_bandeiras::Taxas_bandeiras(){
 
 
 void Taxas_bandeiras::ler_taxas(){
-    d_visaemaster = 1.49;
+    d_visa = 1.49;
+    d_master = 1.49;
     d_elo = 2.49;
     d_hiper = 0;
 
-    c_visaemaster = {2.97, 3.60, 3.94, 4.27, 4.60, 4.93, 5.84, 6.17, 6.49, 6.82, 7.14, 7.45};
+    c_visa = {2.97, 3.60, 3.94, 4.27, 4.60, 4.93, 5.84, 6.17, 6.49, 6.82, 7.14, 7.45};
+    c_master = {2.97, 3.60, 3.94, 4.27, 4.60, 4.93, 5.84, 6.17, 6.49, 6.82, 7.14, 7.45};
     c_elo = {4.16, 4.79, 5.12, 5.45, 5.78, 6.10, 6.91, 7.24, 7.56, 7.87, 8.19, 8.51};
     c_hiper = {3.37, 4.49, 4.83, 5.16, 5.48, 5.81, 6.62, 6.95, 7.27, 7.59, 7.90, 8.22};
 }
@@ -100,19 +102,22 @@ void Taxas_bandeiras::ler_taxas(){
 
 
 Cartao_Debito::Cartao_Debito(){
-    std::cout << "Qual o cartão utilizado? \nVisa ou Master => digite 1 \nElo => digite 2 \nHipercard => digite 3" << std::endl;
+    std::cout << "Qual o cartão utilizado? \nVisa => digite 1 \nMaster => digite 2 \nElo => digite 3 \nHipercard => digite 4" << std::endl;
     unsigned int bandeira;
     std::cin >> bandeira;
 
     switch (bandeira)
     {
     case 1:
-        bandeira_do_cartao = Cartao::VISAMASTER;
+        bandeira_do_cartao = Cartao::VISA;
         break;
     case 2:
-        bandeira_do_cartao = Cartao::ELO;
+        bandeira_do_cartao = Cartao::MASTER;
         break;
     case 3:
+        bandeira_do_cartao = Cartao::ELO;
+        break;
+    case 4:
         bandeira_do_cartao = Cartao::HIPERCARD;
         break;
     default:
@@ -128,8 +133,11 @@ void Cartao_Debito::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float v
 
     switch (bandeira_do_cartao)
     {
-    case Cartao::VISAMASTER:
-        taxabandeira = d_visaemaster;
+    case Cartao::VISA:
+        taxabandeira = d_master;
+        break;
+    case Cartao::MASTER:
+        taxabandeira = d_master;
         break;
     case Cartao::ELO:
         taxabandeira = d_elo;
@@ -151,24 +159,26 @@ void Cartao_Debito::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float v
 
 
 Cartao_Credito::Cartao_Credito(){
-    std::cout << "Qual o cartão utilizado? \nVisa ou Master => digite 1 \nElo => digite 2 \nHipercard => digite 3" << std::endl;
+    std::cout << "Qual o cartão utilizado? \nVisa => digite 1 \nMaster => digite 2 \nElo => digite 3 \nHipercard => digite 4" << std::endl;
     unsigned int bandeira;
     std::cin >> bandeira;
 
     switch (bandeira)
     {
     case 1:
-        bandeira_do_cartao = Cartao::VISAMASTER;
+        bandeira_do_cartao = Cartao::VISA;
         break;
     case 2:
-        bandeira_do_cartao = Cartao::ELO;
+        bandeira_do_cartao = Cartao::MASTER;
         break;
     case 3:
+        bandeira_do_cartao = Cartao::ELO;
+        break;
+    case 4:
         bandeira_do_cartao = Cartao::HIPERCARD;
         break;
     default:
         std::cout << "Valor invávilo" << std::endl;
-        break;
     }
 }
 
@@ -179,8 +189,11 @@ void Cartao_Credito::pagar(Empresa* empresa_creditada, Data data_de_pfmt, float 
 
     switch (bandeira_do_cartao)
     {
-    case Cartao::VISAMASTER:
-        taxabandeira = c_visaemaster[parcelas-1];
+    case Cartao::VISA:
+        taxabandeira = c_visa[parcelas-1];
+        break;
+    case Cartao::MASTER:
+        taxabandeira = c_master[parcelas-1];
         break;
     case Cartao::ELO:
         taxabandeira = c_elo[parcelas-1];
